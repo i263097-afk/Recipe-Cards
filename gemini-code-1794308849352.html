@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cooking Lab - Irfa Zafar (26i-3097)</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Top Student Info Bar -->
+    <div class="top-bar">
+      <span><strong>Student:</strong> Irfa Zafar</span>
+      <span>|</span>
+      <span><strong>Roll No:</strong> 26i-3097</span>
+      <span>|</span>
+      <span><strong>Program:</strong> Software Engineering</span>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar">
+      <div class="logo">🍳 RecipeStudio</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recipes.html" class="active">Cooking Lab</a></li>
+        <li><a href="nutrition.html">Nutrition & Analytics</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>Interactive Cooking Lab</h1>
+        <p>
+          Master your recipes with live timers and dynamic step-by-step
+          guidance.
+        </p>
+      </div>
+
+      <div class="lab-layout">
+        <!-- Interactive Timer Card -->
+        <div class="card timer-card">
+          <h2>⏱️ Start Cooking Timer</h2>
+          <div class="timer-display" id="timerDisplay">05:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" onclick="startTimer()">Start</button>
+            <button class="btn btn-secondary" onclick="pauseTimer()">
+              Pause
+            </button>
+            <button class="btn btn-outline" onclick="resetTimer()">Reset</button>
+          </div>
+          <div class="preset-buttons">
+            <button onclick="setPreset(60)">1 Min (Custard)</button>
+            <button onclick="setPreset(300)">5 Min (Rice)</button>
+            <button onclick="setPreset(600)">10 Min (Wheat)</button>
+          </div>
+        </div>
+
+        <!-- Step-by-Step Instructions -->
+        <div class="card instructions-card">
+          <h2>📋 Cooking Instructions</h2>
+          <div class="instruction-steps">
+            <div class="step-item">
+              <span class="step-badge">Step 1</span>
+              <div>
+                <h4>Prepare Rice & Grain Base</h4>
+                <p>
+                  Measure 1 cup of rice and thoroughly rinse under cold water.
+                  Boil with 2 cups of water for 15 minutes until soft.
+                </p>
+              </div>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">Step 2</span>
+              <div>
+                <h4>Process Wheat Dough</h4>
+                <p>
+                  Knead wheat flour with warm water and a pinch of salt until smooth.
+                  Rest for 10 minutes before shaping.
+                </p>
+              </div>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">Step 3</span>
+              <div>
+                <h4>Prepare Custard Dessert</h4>
+                <p>
+                  Whisk custard powder into cold milk. Stir into boiling milk on medium
+                  heat until thick and creamy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recipe Library Section -->
+      <section class="recipe-section">
+        <h2>Explore & Add Recipes</h2>
+        <div class="filter-bar">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search ingredients or recipes..."
+            onkeyup="filterRecipes()"
+          />
+          <button class="filter-btn active" onclick="filterCategory('all')">
+            All
+          </button>
+          <button class="filter-btn" onclick="filterCategory('Rice')">
+            Rice
+          </button>
+          <button class="filter-btn" onclick="filterCategory('Wheat')">
+            Wheat
+          </button>
+          <button class="filter-btn" onclick="filterCategory('Custard')">
+            Custard
+          </button>
+        </div>
+
+        <div class="recipe-grid" id="recipeGrid">
+          <div class="recipe-card" data-category="Custard">
+            <div class="card-tag">Custard</div>
+            <h3>Vanilla Custard Supreme</h3>
+            <p><strong>Step:</strong> 3 | <strong>Nutrition:</strong> 60%</p>
+            <p>Rich and creamy dessert topped with fresh berries.</p>
+          </div>
+          <div class="recipe-card" data-category="Wheat">
+            <div class="card-tag">Wheat</div>
+            <h3>Golden Wheat Flatbread</h3>
+            <p><strong>Step:</strong> 2 | <strong>Nutrition:</strong> 50%</p>
+            <p>Traditional whole wheat bread baked to golden perfection.</p>
