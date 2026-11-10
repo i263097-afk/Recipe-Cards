@@ -1,0 +1,12 @@
+h1 {
+  font-size: 30px;
+  padding-left: 40%;
+}
+body {
+  background-color: lightpink;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+}
