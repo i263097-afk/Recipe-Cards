@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nutrition & Analytics - Irfa Zafar (26i-3097)</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Chart.js for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Top Student Info Bar -->
+    <div class="top-bar">
+      <span><strong>Student:</strong> Irfa Zafar</span>
+      <span>|</span>
+      <span><strong>Roll No:</strong> 26i-3097</span>
+      <span>|</span>
+      <span><strong>Program:</strong> Software Engineering</span>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar">
+      <div class="logo">🍳 RecipeStudio</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recipes.html">Cooking Lab</a></li>
+        <li><a href="nutrition.html" class="active">Nutrition & Analytics</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>Nutritional Analytics & Insights</h1>
+        <p>
+          Data-driven breakdown of recipe values, portion scaling, and developer details.
+        </p>
+      </div>
+
+      <!-- Analytics Layout -->
+      <div class="analytics-layout">
+        <!-- Chart Container -->
+        <div class="card chart-card">
+          <h2>📊 Lab 11 Nutrition Value Breakdown</h2>
+          <div class="chart-wrapper">
+            <canvas id="nutritionChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Portion Calculator -->
+        <div class="card calculator-card">
+          <h2>⚖️ Interactive Portion Calculator</h2>
+          <p>Adjust servings to see scaled nutritional values for Lab 11 ingredients:</p>
+          
+          <div class="calc-control">
+            <label for="servingsRange">Servings: <span id="servingsVal">1</span></label>
+            <input 
+              type="range" 
+              id="servingsRange" 
+              min="1" 
+              max="10" 
+              value="1" 
+              oninput="calculatePortions()"
+            />
+          </div>
+
+          <div class="scaled-results">
+            <div class="result-box">
+              <span>🌾 Rice (10%)</span>
+              <strong id="riceResult">10%</strong>
+            </div>
+            <div class="result-box">
+              <span>🍞 Wheat (50%)</span>
+              <strong id="wheatResult">50%</strong>
+            </div>
+            <div class="result-box">
+              <span>🍮 Custard (60%)</span>
+              <strong id="custardResult">60%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Developer Profile & Contact -->
+      <div class="profile-grid">
+        <div class="card dev-card">
+          <h2>💻 Developer Profile</h2>
+          <div class="profile-details">
+            <p><strong>Name:</strong> Irfa Zafar</p>
+            <p><strong>Roll Number:</strong> 26i-3097</p>
+            <p><strong>Department:</strong> Software Engineering</p>
+            <p><strong>Course:</strong> Web Engineering / CS Lab 11</p>
+            <p><strong>Project Theme:</strong> Recipe Card (Light Pink & Purple)</p>
+          </div>
+        </div>
+
+        <div class="card contact-card">
+          <h2>📬 Recipe Feedback</h2>
+          <form onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+              <label for="userName">Name</label>
+              <input type="text" id="userName" placeholder="Your name..." required />
+            </div>
+            <div class="form-group">
+              <label for="userMessage">Feedback / Recipe Notes</label>
+              <textarea id="userMessage" rows="3" placeholder="Share your thoughts on the recipes..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+          </form>
+          <p id="formFeedback" class="form-feedback"></p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        © 2026 Irfa Zafar | Roll No: 26i-3097 | Software Engineering Lab 11
+        Project
+      </p>
+    </footer>
+
+    <script>
+      // Render Chart using Lab 11 values (Rice: 10%, Wheat: 50%, Custard: 60%)
+      const ctx = document.getElementById('nutritionChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Rice (Step 1)', 'Wheat (Step 2)', 'Custard (Step 3)'],
+          datasets: [{
+            label: 'Nutrition Percentage (%)',
+            data: [10, 50, 60],
+            backgroundColor: [
+              'rgba(244, 143, 177, 0.7)',
+              'rgba(142, 36, 170, 0.7)',
+              'rgba(74, 20, 140, 0.7)'
+            ],
+            borderColor: [
+              '#f48fb1',
+              '#8e24aa',
+              '#4a148c'
+            ],
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: function(value) { return value + '%'; }
+              }
+            }
+          }
+        }
+      });
+
+      // Portion Calculator function
+      function calculatePortions() {
+        const servings = document.getElementById('servingsRange').value;
+        document.getElementById('servingsVal').innerText = servings;
+        document.getElementById('riceResult').innerText = (10 * servings) + '%';
+        document.getElementById('wheatResult').innerText = (50 * servings) + '%';
+        document.getElementById('custardResult').innerText = (60 * servings) + '%';
+      }
+
+      // Contact Form Handler
+      function handleFormSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('userName').value;
+        const feedback = document.getElementById('formFeedback');
+        feedback.innerText = `Thank you, ${name}! Your feedback has been received.`;
+        feedback.style.display = 'block';
+        e.target.reset();
+      }
+    </script>
+  </body>
+</html>
