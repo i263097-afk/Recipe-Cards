@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourmet Craft - Lab 11 Recipe Hub | Irfa Zafar</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js for Culinary Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            pinkLight: '#FCE4EC',
+                            pinkMid: '#F8BBD0',
+                            pinkAccent: '#F48FB1',
+                            purpleDark: '#4A148C',
+                            purpleMain: '#6A1B9A',
+                            purpleLight: '#8E24AA',
+                            purpleSoft: '#F3E5F5',
+                            purpleSubtle: '#E1BEE7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(244, 143, 177, 0.3);
+        }
+        .gradient-header {
+            background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 60%, #8E24AA 100%);
+        }
+        .tab-btn.active {
+            background-color: #6A1B9A;
+            color: #ffffff;
+            box-shadow: 0 4px 14px 0 rgba(106, 27, 154, 0.39);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-brand-pinkLight via-brand-purpleSoft to-brand-pinkMid min-h-full font-sans text-slate-800 flex flex-col justify-between selection:bg-brand-purpleMain selection:text-white">
+
+    <!-- Top Student Banner & Header -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <!-- Developer Info Bar -->
+        <div class="gradient-header text-white px-4 py-2 text-xs md:text-sm font-medium tracking-wide flex flex-wrap justify-between items-center border-b border-purple-400/30">
+            <div class="flex items-center space-x-2">
+                <span class="bg-white/20 px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider">SE Student Lab 11</span>
+                <span>Developer: <strong>Irfa Zafar</strong></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span><i data-lucide="badge-check" class="inline w-4 h-4 mr-1 text-pink-300"></i>Roll No: <strong>26i-3097</strong></span>
+                <span class="hidden sm:inline-block"><i data-lucide="code-2" class="inline w-4 h-4 mr-1 text-pink-300"></i>Software Engineering</span>
+            </div>
+        </div>
+
+        <!-- Main Navigation Bar -->
+        <nav class="bg-white/95 backdrop-blur-md border-b border-brand-pinkMid/50 px-4 lg:px-8 py-3.5 flex flex-wrap justify-between items-center shadow-sm">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-purpleDark to-brand-pinkAccent flex items-center justify-center text-white shadow-md shadow-purple-900/20">
+                    <i data-lucide="utensils-crossed" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="font-serif font-bold text-xl md:text-2xl text-brand-purpleDark tracking-tight leading-none">Recipe Card Studio</h1>
+                    <p class="text-[10px] text-brand-purpleMain font-semibold tracking-wider uppercase">Lab 11 Multi-Page Application</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="flex items-center space-x-1 sm:space-x-2 mt-3 sm:mt-0 w-full sm:w-auto justify-center">
+                <button onclick="switchTab('home')" id="tab-home" class="tab-btn active px-4 py-2 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex items-center space-x-2 text-brand-purpleDark hover:bg-brand-purpleSoft">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    <span>1. Home</span>
+                </button>
+                <button onclick="switchTab('recipes')" id="tab-recipes" class="tab-btn px-4 py-2 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex items-center space-x-2 text-brand-purpleDark hover:bg-brand-purpleSoft">
+                    <i data-lucide="chef-hat" class="w-4 h-4"></i>
+                    <span>2. Cooking Lab</span>
+                </button>
+                <button onclick="switchTab('about')" id="tab-about" class="tab-btn px-4 py-2 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex items-center space-x-2 text-brand-purpleDark hover:bg-brand-purpleSoft">
+                    <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                    <span>3. Analytics & About</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow container mx-auto px-4 py-6 md:py-8">
+
+        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <div id="page-home" class="page-content space-y-10">
+            <!-- Hero Section -->
+            <section class="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-r from-brand-purpleDark via-brand-purpleMain to-purple-900 text-white py-12 md:py-16 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-3/5 space-y-6 z-10 text-center md:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-pink-500/30 border border-pink-300/40 px-3.5 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm text-pink-200">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-pink-300"></i>
+                        <span>Welcome to Lab 11 Recipe Studio</span>
+                    </div>
+                    <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+                        Crafting Culinary Excellence.
+                    </h1>
+                    <p class="text-pink-100/90 text-sm md:text-base max-w-xl font-light leading-relaxed">
+                        An interactive recipe ecosystem created by Irfa Zafar. Featuring structured cooking steps, real-time recipe search, dynamic timers, and visual nutrition metrics.
+                    </p>
+                    <div class="flex flex-wrap gap-3 justify-center md:justify-start pt-2">
+                        <button onclick="switchTab('recipes')" class="px-6 py-3 bg-white text-brand-purpleDark font-bold rounded-xl shadow-lg hover:bg-brand-pinkLight transition duration-300 flex items-center space-x-2">
+                            <span>Start Cooking Lab</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="switchTab('about')" class="px-6 py-3 bg-brand-purpleLight/40 hover:bg-brand-purpleLight/60 border border-purple-300/40 text-white font-medium rounded-xl transition duration-300">
+                            Nutrition Analytics
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Featured Hero Graphic/Card -->
+                <div class="md:w-2/5 mt-8 md:mt-0 flex justify-center w-full">
+                    <div class="relative w-full max-w-sm glass-card rounded-2xl p-6 shadow-2xl text-slate-800 border-2 border-white/50 transform hover:scale-105 transition-transform duration-300">
+                        <div class="absolute -top-3 -right-3 bg-brand-purpleMain text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
+                            Signature Recipe
+                        </div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="p-3 bg-brand-pinkMid/50 rounded-xl text-brand-purpleDark">
+                                <i data-lucide="soup" class="w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-lg text-brand-purpleDark">Custard Supreme</h3>
+                                <p class="text-xs text-brand-purpleMain">Lab 11 Step 3 Recipe</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center py-2 bg-brand-purpleSoft/60 rounded-xl mb-4 border border-brand-purpleSubtle/50">
+                            <div>
+                                <p class="text-[10px] uppercase text-gray-500 font-bold">Prep</p>
+                                <p class="text-xs font-bold text-brand-purpleDark">10 mins</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] uppercase text-gray-500 font-bold">Difficulty</p>
+                                <p class="text-xs font-bold text-brand-purpleDark">Easy</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] uppercase text-gray-500 font-bold">Nutrition</p>
+                                <p class="text-xs font-bold text-pink-600">60% Value</p>
+                            </div>
+                        </div>
+                        <button onclick="switchTab('recipes'); startCookingTimer('Custard Supreme', 15);" class="w-full py-2.5 bg-brand-purpleMain hover:bg-brand-purpleDark text-white text-xs font-bold rounded-lg transition duration-200">
+                            Quick Start Cooking
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Original Lab 11 Data Table Section -->
+            <section class="glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-purple-200/60">
+                    <div>
+                        <span class="text-xs font-bold text-brand-purpleMain uppercase tracking-widest">Lab 11 Baseline Matrix</span>
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold text-brand-purpleDark">Recipe Ingredients & Nutrition Table</h2>
+                    </div>
+                    <span class="mt-2 md:mt-0 text-xs bg-brand-pinkMid/60 text-brand-purpleDark px-3 py-1 rounded-full font-semibold border border-pink-300">
+                        Responsive Pink/Purple Theme
+                    </span>
+                </div>
+
+                <!-- Responsive HTML Table -->
+                <div class="overflow-x-auto rounded-2xl border border-purple-200 shadow-sm bg-white">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-brand-purpleDark to-brand-purpleMain text-white">
+                                <th class="py-4 px-6 font-semibold border-b border-purple-900">Ingredients</th>
+                                <th class="py-4 px-6 font-semibold text-center border-b border-purple-900">Number Steps</th>
+                                <th class="py-4 px-6 font-semibold text-center border-b border-purple-900">Nutrition Table</th>
+                                <th class="py-4 px-6 font-semibold text-right border-b border-purple-900">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-purple-100 text-slate-700">
+                            <tr class="hover:bg-brand-purpleSoft/50 transition">
+                                <td class="py-4 px-6 font-bold flex items-center space-x-3 text-brand-purpleDark">
+                                    <span class="w-8 h-8 rounded-lg bg-pink-100 text-brand-purpleMain flex items-center justify-center font-serif">🌾</span>
+                                    <span>Rice</span>
+                                </td>
+                                <td class="py-4 px-6 text-center font-semibold">
+                                    <span class="bg-purple-100 text-purple-800 px-3.5 py-1 rounded-full text-xs font-bold">1</span>
+                                </td>
+                                <td class="py-4 px-6 text-center">
+                                    <div class="w-full bg-slate-100 rounded-full h-3 max-w-[140px] mx-auto overflow-hidden">
+                                        <div class="bg-brand-purpleMain h-full rounded-full" style="width: 10%"></div>
+                                    </div>
+                                    <span class="text-xs font-bold text-brand-purpleMain mt-1 block">10%</span>
+                                </td>
+                                <td class="py-4 px-6 text-right">
+                                    <button onclick="switchTab('recipes'); filterRecipes('Rice');" class="text-xs bg-brand-purpleSoft hover:bg-brand-purpleSubtle text-brand-purpleDark font-bold px-3 py-1.5 rounded-lg border border-purple-300">View Recipe</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-brand-purpleSoft/50 transition">
+                                <td class="py-4 px-6 font-bold flex items-center space-x-3 text-brand-purpleDark">
+                                    <span class="w-8 h-8 rounded-lg bg-pink-100 text-brand-purpleMain flex items-center justify-center font-serif">🍞</span>
+                                    <span>Wheat</span>
+                                </td>
+                                <td class="py-4 px-6 text-center font-semibold">
+                                    <span class="bg-purple-100 text-purple-800 px-3.5 py-1 rounded-full text-xs font-bold">2</span>
+                                </td>
+                                <td class="py-4 px-6 text-center">
+                                    <div class="w-full bg-slate-100 rounded-full h-3 max-w-[140px] mx-auto overflow-hidden">
+                                        <div class="bg-brand-purpleMain h-full rounded-full" style="width: 50%"></div>
+                                    </div>
+                                    <span class="text-xs font-bold text-brand-purpleMain mt-1 block">50%</span>
+                                </td>
+                                <td class="py-4 px-6 text-right">
+                                    <button onclick="switchTab('recipes'); filterRecipes('Wheat');" class="text-xs bg-brand-purpleSoft hover:bg-brand-purpleSubtle text-brand-purpleDark font-bold px-3 py-1.5 rounded-lg border border-purple-300">View Recipe</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-brand-purpleSoft/50 transition">
+                                <td class="py-4 px-6 font-bold flex items-center space-x-3 text-brand-purpleDark">
+                                    <span class="w-8 h-8 rounded-lg bg-pink-100 text-brand-purpleMain flex items-center justify-center font-serif">🍮</span>
+                                    <span>Custard</span>
+                                </td>
+                                <td class="py-4 px-6 text-center font-semibold">
+                                    <span class="bg-purple-100 text-purple-800 px-3.5 py-1 rounded-full text-xs font-bold">3</span>
+                                </td>
+                                <td class="py-4 px-6 text-center">
+                                    <div class="w-full bg-slate-100 rounded-full h-3 max-w-[140px] mx-auto overflow-hidden">
+                                        <div class="bg-pink-500 h-full rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <span class="text-xs font-bold text-pink-600 mt-1 block">60%</span>
+                                </td>
+                                <td class="py-4 px-6 text-right">
+                                    <button onclick="switchTab('recipes'); filterRecipes('Custard');" class="text-xs bg-brand-purpleSoft hover:bg-brand-purpleSubtle text-brand-purpleDark font-bold px-3 py-1.5 rounded-lg border border-purple-300">View Recipe</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Featured Recipe Cards Grid -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="font-serif text-2xl font-bold text-brand-purpleDark">Featured Recipe Cards</h2>
+                    <button onclick="switchTab('recipes')" class="text-xs font-bold text-brand-purpleMain hover:underline">View All Cards &rarr;</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="home-featured-grid">
+                    <!-- Dynamic Featured Cards rendered via JS -->
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= PAGE 2: COOKING LAB PAGE ================= -->
+        <div id="page-recipes" class="page-content hidden space-y-8">
+            
+            <!-- Interactive Cooking Timer Section ("Start Cooking" & "Timer" from Lab 11) -->
+            <section class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border-2 border-brand-purpleSubtle relative overflow-hidden">
+                <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                    <!-- Instructions & Controls -->
+                    <div class="w-full lg:w-1/2 space-y-4 text-center lg:text-left">
+                        <div class="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-brand-purpleMain bg-purple-100 px-3 py-1 rounded-full">
+                            <i data-lucide="flame" class="w-4 h-4 text-pink-500"></i>
+                            <span>Interactive Cooking Kitchen</span>
+                        </div>
+                        <h2 class="font-serif text-3xl font-extrabold text-brand-purpleDark">Start Cooking</h2>
+                        <h3 class="text-lg font-bold text-pink-600" id="timer-recipe-title">Selected: Custard Supreme</h3>
+                        
+                        <div class="bg-white/80 p-4 rounded-2xl border border-purple-100 text-xs text-slate-700 space-y-1 text-left">
+                            <p class="font-bold text-brand-purpleDark text-sm mb-1"><i data-lucide="list-checks" class="inline w-4 h-4 mr-1"></i> Cooking Instructions:</p>
+                            <p id="cooking-instructions-text">1. Whisk custard powder with 50ml milk. 2. Heat remaining milk with sugar. 3. Simmer and stir continuously for 15 minutes.</p>
+                        </div>
+
+                        <!-- Timer Buttons -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                            <button id="btn-start-timer" onclick="startTimer()" class="px-6 py-2.5 bg-brand-purpleMain hover:bg-brand-purpleDark text-white font-bold rounded-xl shadow-md transition flex items-center space-x-2">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                <span>Start Timer</span>
+                            </button>
+                            <button id="btn-pause-timer" onclick="pauseTimer()" class="px-5 py-2.5 bg-pink-200 hover:bg-pink-300 text-brand-purpleDark font-bold rounded-xl transition flex items-center space-x-2">
+                                <i data-lucide="pause" class="w-4 h-4"></i>
+                                <span>Pause</span>
+                            </button>
+                            <button id="btn-reset-timer" onclick="resetTimer()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition flex items-center space-x-2">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                <span>Reset</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Countdown Display -->
+                    <div class="w-full lg:w-1/2 flex justify-center">
+                        <div class="relative bg-gradient-to-br from-brand-purpleDark to-brand-purpleMain text-white rounded-3xl p-8 w-full max-w-sm text-center shadow-2xl border-4 border-pink-200">
+                            <h3 class="text-sm uppercase font-bold text-pink-200 tracking-widest mb-1">Cooking Timer</h3>
+                            <div class="font-mono text-5xl md:text-6xl font-extrabold tracking-widest text-pink-100 my-4" id="timer-display">
+                                15:00
+                            </div>
+                            <div id="timer-status-badge" class="inline-block text-xs font-bold px-4 py-1.5 bg-white/20 rounded-full text-white mt-1">
+                                Ready to Cook
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search and Ingredient Filter Bar -->
+            <section class="glass-card rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
+                <div class="relative w-full md:w-1/2">
+                    <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                    <input type="text" id="recipe-search" oninput="filterRecipesList()" placeholder="Search recipes by name or ingredients..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-brand-purpleSubtle focus:outline-none focus:ring-2 focus:ring-brand-purpleMain bg-white text-sm">
+                </div>
+                <div class="flex items-center space-x-2 w-full md:w-auto justify-end">
+                    <span class="text-xs font-bold text-slate-600 uppercase">Ingredient Filter:</span>
+                    <button onclick="filterRecipes('all')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-purpleMain text-white shadow-sm">All</button>
+                    <button onclick="filterRecipes('Rice')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-brand-purpleDark hover:bg-pink-100">Rice</button>
+                    <button onclick="filterRecipes('Wheat')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-brand-purpleDark hover:bg-pink-100">Wheat</button>
+                    <button onclick="filterRecipes('Custard')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-brand-purpleDark hover:bg-pink-100">Custard</button>
+                </div>
+            </section>
+
+            <!-- Recipes Catalog Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="recipes-catalog-grid">
+                <!-- Dynamically Inserted Cards -->
+            </section>
+
+            <!-- Custom Recipe Creation Form -->
+            <section class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border border-pink-200">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="p-3 bg-brand-purpleMain text-white rounded-2xl">
+                        <i data-lucide="plus-circle" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-brand-purpleDark">Add Custom Recipe Card</h3>
+                        <p class="text-xs text-slate-500">Expand the software engineering recipe collection with custom ingredients</p>
+                    </div>
+                </div>
+
+                <form id="add-recipe-form" onsubmit="handleAddRecipe(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Recipe Title</label>
+                        <input type="text" id="new-title" required placeholder="e.g. Honey Wheat Toast" class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Main Ingredient (Lab 11)</label>
+                        <select id="new-ingredient" class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm bg-white">
+                            <option value="Rice">Rice (Step 1)</option>
+                            <option value="Wheat">Wheat (Step 2)</option>
+                            <option value="Custard">Custard (Step 3)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Cook Time (Minutes)</label>
+                        <input type="number" id="new-time" min="1" max="120" required placeholder="20" class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Nutrition Score (%)</label>
+                        <input type="number" id="new-nutrition" min="1" max="100" required placeholder="50" class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Cooking Instructions</label>
+                        <textarea id="new-instructions" rows="3" required placeholder="1. Mix ingredients. 2. Bake or boil. 3. Serve warm." class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm"></textarea>
+                    </div>
+                    <div class="md:col-span-2 text-right">
+                        <button type="submit" class="px-6 py-3 bg-brand-purpleMain hover:bg-brand-purpleDark text-white font-bold rounded-xl shadow-md transition">
+                            Create Recipe Card
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- ================= PAGE 3: NUTRITION & ANALYTICS PAGE ================= -->
+        <div id="page-about" class="page-content hidden space-y-8">
+            
+            <!-- Student Profile Header -->
+            <section class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border-t-4 border-t-brand-purpleDark">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-brand-purpleDark via-brand-purpleMain to-brand-pinkAccent p-1 shadow-xl flex-shrink-0">
+                        <div class="w-full h-full bg-white rounded-full flex items-center justify-center font-serif text-3xl font-extrabold text-brand-purpleDark">
+                            IZ
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-center md:text-left flex-grow">
+                        <div class="flex flex-wrap justify-center md:justify-start items-center gap-2">
+                            <h2 class="font-serif text-3xl font-extrabold text-brand-purpleDark">Irfa Zafar</h2>
+                            <span class="bg-brand-purpleSoft text-brand-purpleDark border border-purple-300 text-xs px-3 py-1 rounded-full font-bold">Roll No: 26i-3097</span>
+                        </div>
+                        <p class="text-sm font-semibold text-brand-purpleMain">Software Engineering Student | Web Engineering Lab 11</p>
+                        <p class="text-slate-600 text-xs md:text-sm max-w-2xl leading-relaxed">
+                            Web page architecture expanding Lab 11 into a complete 3-page interactive site styled with a light pink and royal purple theme.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Analytics & Portion Calculator Grid -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chart.js Nutrition Breakdown Visualizer -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-purple-100 pb-3">
+                        <h3 class="font-serif font-bold text-xl text-brand-purpleDark">Lab 11 Nutrition Breakdown</h3>
+                        <span class="text-xs bg-pink-100 text-pink-700 px-2.5 py-1 rounded-md font-bold">Chart.js Visual</span>
+                    </div>
+                    <div class="relative h-64 w-full flex items-center justify-center">
+                        <canvas id="nutritionChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-500 text-center italic">Visual nutrient representation: Rice (10%), Wheat (50%), Custard (60%).</p>
+                </div>
+
+                <!-- Dynamic Portion Calculator -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-purple-100 pb-3 mb-4">
+                            <h3 class="font-serif font-bold text-xl text-brand-purpleDark">Portion Nutrition Estimator</h3>
+                            <i data-lucide="calculator" class="w-5 h-5 text-brand-purpleMain"></i>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-4">Adjust portions to calculate total custom nutrient yield:</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-brand-purpleDark mb-1">
+                                    <span>Rice Portions (10% Nutrients)</span>
+                                    <span id="rice-val">1</span>
+                                </div>
+                                <input type="range" id="rice-slider" min="0" max="10" value="1" oninput="calculateNutrition()" class="w-full accent-brand-purpleMain">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-brand-purpleDark mb-1">
+                                    <span>Wheat Portions (50% Nutrients)</span>
+                                    <span id="wheat-val">1</span>
+                                </div>
+                                <input type="range" id="wheat-slider" min="0" max="10" value="1" oninput="calculateNutrition()" class="w-full accent-brand-purpleMain">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-pink-600 mb-1">
+                                    <span>Custard Portions (60% Nutrients)</span>
+                                    <span id="custard-val">1</span>
+                                </div>
+                                <input type="range" id="custard-slider" min="0" max="10" value="1" oninput="calculateNutrition()" class="w-full accent-pink-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Score Result Box -->
+                    <div class="bg-gradient-to-r from-brand-purpleDark to-brand-purpleMain text-white rounded-2xl p-4 text-center mt-4 shadow-md">
+                        <span class="text-xs font-semibold uppercase text-pink-200">Total Calculated Score</span>
+                        <div class="text-3xl font-extrabold text-white my-1" id="total-nutrition-score">120 Points</div>
+                        <span class="text-[11px] text-purple-200 font-bold" id="nutrition-tier">Balanced Combination</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student Feedback & Contact Form -->
+            <section class="glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+                <div class="max-w-2xl mx-auto space-y-4">
+                    <div class="text-center space-y-1">
+                        <h3 class="font-serif text-2xl font-bold text-brand-purpleDark">Feedback & Contact</h3>
+                        <p class="text-xs text-slate-500">Send an inquiry to Software Engineering Student Irfa Zafar</p>
+                    </div>
+
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4 pt-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Your Name</label>
+                                <input type="text" required placeholder="Instructor / Peer" class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Email Address</label>
+                                <input type="email" required placeholder="evaluator@university.edu" class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-brand-purpleDark uppercase mb-1">Message</label>
+                            <textarea rows="3" required placeholder="Lab 11 theme implementation feedback..." class="w-full px-4 py-2.5 rounded-xl border border-purple-200 focus:ring-2 focus:ring-brand-purpleMain outline-none text-sm"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="px-8 py-3 bg-brand-purpleMain hover:bg-brand-purpleDark text-white font-bold rounded-xl shadow-lg transition">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Notification Toast Box -->
+    <div id="toast-msg" class="fixed bottom-5 right-5 transform translate-y-24 opacity-0 transition-all duration-300 bg-brand-purpleDark text-white px-5 py-3 rounded-2xl shadow-2xl border border-pink-300 flex items-center space-x-3 z-50 pointer-events-none">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-pink-300"></i>
+        <span id="toast-text" class="text-xs md:text-sm font-semibold">Notification message</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white/80 border-t border-brand-pinkMid/60 py-6 text-center text-xs text-slate-600 mt-12">
+        <div class="container mx-auto px-4 space-y-2">
+            <p class="font-semibold text-brand-purpleDark">Lab 11 Multi-Page Recipe Studio</p>
+            <p>Created by <strong>Irfa Zafar</strong> | Roll No: <strong>26i-3097</strong> | Software Engineering Department</p>
+            <p class="text-[10px] text-slate-400">&copy; 2026 Light Pink & Royal Purple Theme</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Lab 11 Data Set
+        let recipesData = [
+            {
+                id: 1,
+                title: "Custard Supreme",
+                ingredient: "Custard",
+                stepNumber: 3,
+                nutrition: "60%",
+                nutritionVal: 60,
+                prepTime: "10 mins",
+                cookTime: 15,
+                difficulty: "Easy",
+                icon: "🍮",
+                instructions: "1. Whisk custard powder with 50ml milk. 2. Heat remaining milk with sugar. 3. Simmer and stir continuously for 15 minutes."
+            },
+            {
+                id: 2,
+                title: "Wheat Pancakes",
+                ingredient: "Wheat",
+                stepNumber: 2,
+                nutrition: "50%",
+                nutritionVal: 50,
+                prepTime: "15 mins",
+                cookTime: 20,
+                difficulty: "Medium",
+                icon: "🍞",
+                instructions: "1. Mix whole wheat flour with milk and eggs. 2. Pour batter on hot skillet. 3. Cook until bubbles form, then flip."
+            },
+            {
+                id: 3,
+                title: "Rice Pudding",
+                ingredient: "Rice",
+                stepNumber: 1,
+                nutrition: "10%",
+                nutritionVal: 10,
+                prepTime: "10 mins",
+                cookTime: 25,
+                difficulty: "Easy",
+                icon: "🌾",
+                instructions: "1. Soak rice for 10 minutes. 2. Boil rice gently with sweetened milk and cardamom. 3. Serve warm or chilled."
+            }
+        ];
+
+        let timerInterval = null;
+        let timerSeconds = 15 * 60;
+        let isTimerRunning = false;
+        let chartInstance = null;
+
+        window.onload = function() {
+            lucide.createIcons();
+            renderFeaturedHomeCards();
+            renderRecipesCatalog(recipesData);
+            initNutritionChart();
+            calculateNutrition();
+        };
+
+        // Navigation Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            const targetPage = document.getElementById(`page-${tabId}`);
+            const targetTab = document.getElementById(`tab-${tabId}`);
+
+            if (targetPage && targetTab) {
+                targetPage.classList.remove('hidden');
+                targetTab.classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Home Page Cards Generator
+        function renderFeaturedHomeCards() {
+            const container = document.getElementById('home-featured-grid');
+            if(!container) return;
+            
+            container.innerHTML = recipesData.slice(0, 3).map(r => `
+                <div class="glass-card rounded-2xl p-5 shadow-lg border border-pink-100 flex flex-col justify-between hover:shadow-xl transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-3xl">${r.icon}</span>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-purple-100 text-brand-purpleMain">Step ${r.stepNumber}</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-brand-purpleDark mb-1">${r.title}</h3>
+                        <p class="text-xs font-semibold text-brand-purpleMain mb-2">Main: ${r.ingredient}</p>
+                        <p class="text-xs text-slate-600 line-clamp-2">${r.instructions}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-purple-100 flex justify-between items-center">
+                        <span class="text-xs font-bold text-pink-600">Nutrients: ${r.nutrition}</span>
+                        <button onclick="switchTab('recipes'); startCookingTimer('${r.title}', ${r.cookTime});" class="text-xs bg-brand-purpleMain text-white px-3.5 py-1.5 rounded-lg font-bold hover:bg-brand-purpleDark transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cooking Lab Catalog Rendering
+        function renderRecipesCatalog(data) {
+            const container = document.getElementById('recipes-catalog-grid');
+            if(!container) return;
+
+            if(data.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500 text-sm">No recipes match your query.</div>`;
+                return;
+            }
+
+            container.innerHTML = data.map(r => `
+                <div class="glass-card rounded-2xl p-6 shadow-md border border-purple-100 flex flex-col justify-between hover:border-brand-purpleSubtle transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-3xl">${r.icon}</span>
+                            <span class="bg-pink-100 text-pink-700 font-bold text-xs px-3 py-1 rounded-full">Nutrition: ${r.nutrition}</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl text-brand-purpleDark mb-1">${r.title}</h3>
+                        <p class="text-xs font-semibold text-brand-purpleMain mb-3">Ingredient: ${r.ingredient} (Step ${r.stepNumber})</p>
+                        <div class="bg-white/80 p-3 rounded-xl border border-purple-100 mb-4 text-xs text-slate-700">
+                            <p><strong>Instructions:</strong> ${r.instructions}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button onclick="startCookingTimer('${r.title}', ${r.cookTime}, '${r.instructions.replace(/'/g, "\\'")}')" class="w-full py-2.5 bg-brand-purpleMain hover:bg-brand-purpleDark text-white text-xs font-bold rounded-xl transition flex items-center justify-center space-x-1.5">
+                            <i data-lucide="play-circle" class="w-4 h-4"></i>
+                            <span>Start Cooking & Timer</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Filtering Logic
+        function filterRecipes(ingredient) {
+            if(ingredient === 'all') {
+                renderRecipesCatalog(recipesData);
+            } else {
+                const filtered = recipesData.filter(r => r.ingredient.toLowerCase() === ingredient.toLowerCase());
+                renderRecipesCatalog(filtered);
+            }
+        }
+
+        function filterRecipesList() {
+            const query = document.getElementById('recipe-search').value.toLowerCase();
+            const filtered = recipesData.filter(r => 
+                r.title.toLowerCase().includes(query) || 
+                r.ingredient.toLowerCase().includes(query) ||
+                r.instructions.toLowerCase().includes(query)
+            );
+            renderRecipesCatalog(filtered);
+        }
+
+        // Add Custom Recipe Form Handler
+        function handleAddRecipe(event) {
+            event.preventDefault();
+            const title = document.getElementById('new-title').value;
+            const ingredient = document.getElementById('new-ingredient').value;
+            const cookTime = parseInt(document.getElementById('new-time').value) || 15;
+            const nutritionVal = parseInt(document.getElementById('new-nutrition').value) || 50;
+            const instructions = document.getElementById('new-instructions').value;
+
+            const newRecipe = {
+                id: Date.now(),
+                title: title,
+                ingredient: ingredient,
+                stepNumber: ingredient === 'Rice' ? 1 : ingredient === 'Wheat' ? 2 : 3,
+                nutrition: `${nutritionVal}%`,
+                nutritionVal: nutritionVal,
+                prepTime: "10 mins",
+                cookTime: cookTime,
+                difficulty: "Custom",
+                icon: ingredient === 'Custard' ? '🍮' : ingredient === 'Wheat' ? '🍞' : '🌾',
+                instructions: instructions
+            };
+
+            recipesData.unshift(newRecipe);
+            renderRecipesCatalog(recipesData);
+            renderFeaturedHomeCards();
+            updateChartData();
+
+            document.getElementById('add-recipe-form').reset();
+            showToast(`Recipe "${title}" added to Lab collection!`);
+        }
+
+        // Kitchen Timer System
+        function startCookingTimer(recipeTitle, minutes, instructions) {
+            document.getElementById('timer-recipe-title').innerText = `Selected: ${recipeTitle}`;
+            if(instructions) {
+                document.getElementById('cooking-instructions-text').innerText = instructions;
+            }
+            timerSeconds = minutes * 60;
+            updateTimerDisplay();
+            startTimer();
+            showToast(`Timer initialized for ${recipeTitle} (${minutes} mins)`);
+        }
+
+        function startTimer() {
+            if (isTimerRunning) return;
+            isTimerRunning = true;
+            document.getElementById('timer-status-badge').innerText = "Cooking in Progress...";
+            document.getElementById('timer-status-badge').className = "inline-block text-xs font-bold px-4 py-1.5 bg-emerald-500 rounded-full text-white mt-1 animate-pulse";
+
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    isTimerRunning = false;
+                    document.getElementById('timer-status-badge').innerText = "Cooking Completed!";
+                    document.getElementById('timer-status-badge').className = "inline-block text-xs font-bold px-4 py-1.5 bg-pink-600 rounded-full text-white mt-1";
+                    showToast("⏰ Cooking Timer Finished!");
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (!isTimerRunning) return;
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('timer-status-badge').innerText = "Timer Paused";
+            document.getElementById('timer-status-badge').className = "inline-block text-xs font-bold px-4 py-1.5 bg-amber-500 rounded-full text-white mt-1";
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerSeconds = 15 * 60;
+            updateTimerDisplay();
+            document.getElementById('timer-status-badge').innerText = "Ready to Cook";
+            document.getElementById('timer-status-badge').className = "inline-block text-xs font-bold px-4 py-1.5 bg-white/20 rounded-full text-white mt-1";
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timer-display').innerText = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Portion Calculator
+        function calculateNutrition() {
+            const rice = parseInt(document.getElementById('rice-slider').value);
+            const wheat = parseInt(document.getElementById('wheat-slider').value);
+            const custard = parseInt(document.getElementById('custard-slider').value);
+
+            document.getElementById('rice-val').innerText = rice;
+            document.getElementById('wheat-val').innerText = wheat;
+            document.getElementById('custard-val').innerText = custard;
+
+            const score = (rice * 10) + (wheat * 50) + (custard * 60);
+            document.getElementById('total-nutrition-score').innerText = `${score} Points`;
+
+            let tier = "Light Blend";
+            if (score > 150) tier = "High Nutrient Energy";
+            else if (score > 70) tier = "Balanced Combination";
+            document.getElementById('nutrition-tier').innerText = tier;
+        }
+
+        // Chart.js Visualization
+        function initNutritionChart() {
+            const ctx = document.getElementById('nutritionChart');
+            if(!ctx) return;
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Rice (Step 1)', 'Wheat (Step 2)', 'Custard (Step 3)'],
+                    datasets: [{
+                        label: 'Nutrition Percentage (%)',
+                        data: [10, 50, 60],
+                        backgroundColor: [
+                            'rgba(142, 36, 170, 0.75)',
+                            'rgba(106, 27, 154, 0.85)',
+                            'rgba(244, 143, 177, 0.95)'
+                        ],
+                        borderColor: [
+                            '#8E24AA',
+                            '#6A1B9A',
+                            '#F48FB1'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(val) { return val + "%"; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChartData() {
+            if(!chartInstance) return;
+            const categories = { Rice: 0, Wheat: 0, Custard: 0 };
+            recipesData.forEach(r => {
+                if(categories[r.ingredient] !== undefined) {
+                    categories[r.ingredient] += r.nutritionVal;
+                }
+            });
+            chartInstance.data.datasets[0].data = [categories.Rice || 10, categories.Wheat || 50, categories.Custard || 60];
+            chartInstance.update();
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            showToast("Message sent to Irfa Zafar!");
+            event.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-msg');
+            const toastText = document.getElementById('toast-text');
+            toastText.innerText = message;
+            
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
